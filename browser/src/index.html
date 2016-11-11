@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%= htmlWebpackPlugin.options.title%></title>
+    <base href="/">
+    <meta charset="utf-8">
+    <% for (key in htmlWebpackPlugin.options.meta) { %>
+    <meta content="<%= htmlWebpackPlugin.options.meta[key] %>" name="<%= key %>">
+    <% } %>
+    <% if (htmlWebpackPlugin.files.favicon) { %>
+    <link rel="shortcut icon" href="<%= htmlWebpackPlugin.files.favicon%>?">
+    <% } %>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+</html>
+<body>

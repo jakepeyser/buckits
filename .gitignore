@@ -1,0 +1,6 @@
+node_modules
+browser/build
+stats.json
+.DS_STORE
+*.log
+.env
