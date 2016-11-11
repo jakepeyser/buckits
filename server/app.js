@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const session = require('express-session')
 const path = require('path');
 const PATHS = {
   indexHTML: path.join(__dirname, '../browser/build/index.html'),
@@ -12,11 +13,12 @@ const chalk = require('chalk');
 if (process.env.NODE_ENV !== 'production')
   require('dotenv').config();
 
-// Logging, static, and body-parser middleware
+// Logging, static, body-parser and session middleware
 app.use(morgan('dev'));
 app.use(express.static(PATHS.build));
 app.use(bodyParser.urlencoded({ extended: true })); // for HTML form submits
 app.use(bodyParser.json()); // would be for AJAX requests
+app.use(session({ secret: process.env.SESSION_SECRET }))
 
 // Handle API and all browser requests
 app.use('/api', require('./routes'));

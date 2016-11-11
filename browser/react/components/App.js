@@ -1,6 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-//import NavbarContainer from './navbar/NavbarContainer';
+import NavbarContainer from './navbar/NavbarContainer';
 //import Footer from './Footer';
 
 /* Material Theme components */
@@ -15,6 +15,7 @@ export default ({ children }) => (
         defaultTitle="Buckets"
         titleTemplate="%s | Buckets"
       />
+      <NavbarContainer />
       <div id="content-wrapper">
         <div id="content">
           { children }

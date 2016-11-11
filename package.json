@@ -33,6 +33,7 @@
     "chai-properties": "^1.2.1",
     "chalk": "^1.1.x",
     "express": "^4.14.x",
+    "express-session": "^1.14.2",
     "material-ui": "^0.16.1",
     "morgan": "^1.7.x",
     "pg": "^6.1.0",
