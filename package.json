@@ -21,10 +21,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jakepeyser/buckets.git"
+    "url": "https://github.com/jakepeyser/buckits.git"
   },
   "bugs": {
-    "url": "https://github.com/jakepeyser/buckets/issues"
+    "url": "https://github.com/jakepeyser/buckits/issues"
   },
   "dependencies": {
     "axios": "^0.15.x",
@@ -68,6 +68,8 @@
     "mocha": "^3.1.2",
     "nodemon": "^1.11.x",
     "style-loader": "^0.13.x",
+    "supertest": "^2.0.1",
+    "supertest-as-promised": "^4.0.2",
     "webpack": "^1.13.x",
     "webpack-merge": "^0.15.x",
     "webpack-validator": "^2.2.x"

@@ -11,7 +11,7 @@ export default (props) => (
   <Toolbar id="navbar" style={{backgroundColor: primary}}>
     <ToolbarGroup>
       <Link to="/">
-        <ToolbarTitle style={{color: primaryText, padding: 0}} text="Buckets" />
+        <ToolbarTitle style={{color: primaryText, padding: 0}} text="Buckits" />
       </Link>
     </ToolbarGroup>
     <NavbarMenu { ...props } />

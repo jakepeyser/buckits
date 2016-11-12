@@ -15,7 +15,8 @@ if (process.env.NODE_ENV !== 'production')
   require('dotenv').config();
 
 // Logging, static, body-parser and session middleware
-app.use(morgan('dev'));
+if (process.env.NODE_ENV !== 'testing')
+  app.use(morgan('dev'));
 app.use(express.static(PATHS.bootstrap));
 app.use(express.static(PATHS.build));
 app.use(bodyParser.urlencoded({ extended: true })); // for HTML form submits
@@ -32,12 +33,18 @@ app.get('/*', (req, res) => res.sendFile(PATHS.indexHTML));
 
 // Error handler
 app.use((err, req, res, next) => {
-  console.error(chalk.red(err));
-  console.error(chalk.red(err.stack))
+  if (process.env.NODE_ENV !== 'testing') {
+    console.error(chalk.red(err));
+    console.error(chalk.red(err.stack))
+  }
   res.status(err.status || 500).send(err.message || 'Internal server error.');
 });
 
-// Start server
-app.listen(PORT, () =>
-  console.log(chalk.blue(`Server started on port ${chalk.magenta(PORT)}`))
-);
+// Start server, oly if not testing (indicated by Supertest agent as parent)
+if (!module.parent) {
+  app.listen(PORT, () =>
+    console.log(chalk.blue(`Server started on port ${chalk.magenta(PORT)}`))
+  );
+}
+
+module.exports = app;

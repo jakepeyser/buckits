@@ -12,8 +12,8 @@ export default ({ children }) => (
   <MuiThemeProvider>
     <div id="main">
       <Helmet
-        defaultTitle="Buckets"
-        titleTemplate="%s | Buckets"
+        defaultTitle="Buckits"
+        titleTemplate="%s | Buckits"
       />
       <NavbarContainer />
       <div className="container content">
