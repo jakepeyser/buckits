@@ -1,6 +1,11 @@
+/* eslint-disable max-len*/
+
 if (process.env.NODE_ENV !== 'production')
   require('dotenv').config();
 const db = require('./');
+const User = db.model('user');
+const Goal = db.model('goal');
+const Promise = require('bluebird');
 const chalk = require('chalk');
 
 const tables = {
@@ -34,9 +39,21 @@ const tables = {
 
 db.didSync
   .then(() => db.sync({ force: true }))
+  // Fill tables with all seed data
   .then(() => {
     return Promise.all(Object.keys(tables).map(table =>
       db.Promise.map(tables[table], result => db.model(table).create(result))))
+  })
+  // Create user likes
+  .then(() => {
+    return Promise.all([ User.findAll(), Goal.findAll() ])
+  })
+  .spread((users, goals) => {
+    const addGoals = [];
+    users.forEach(user => {
+      addGoals.push(user.addGoal(goals));
+    })
+    return Promise.all(addGoals)
   })
   .then(() => console.log(chalk.green('Database seeded')))
   .catch(error => console.log(chalk.red(error)))
