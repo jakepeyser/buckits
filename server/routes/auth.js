@@ -7,8 +7,8 @@ const router = require('express').Router();
 // Sign up and create a new user
 router.post('/signup', (req, res, next) => {
   User.create({
-    first_name: req.body.firstname,
-    last_name: req.body.lastname,
+    first_name: req.body.firstName,
+    last_name: req.body.lastName,
     email: req.body.email,
     password: req.body.password
   })
@@ -42,7 +42,7 @@ router.post('/login', (req, res, next) => {
           }
 
           req.session.userId = user.id;
-          res.send(user);
+          return res.send(user);
         })
     })
     .catch(next);

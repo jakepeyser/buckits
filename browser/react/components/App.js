@@ -16,10 +16,8 @@ export default ({ children }) => (
         titleTemplate="%s | Buckets"
       />
       <NavbarContainer />
-      <div id="content-wrapper">
-        <div id="content">
-          { children }
-        </div>
+      <div className="container content">
+        { children }
       </div>
     </div>
   </MuiThemeProvider>

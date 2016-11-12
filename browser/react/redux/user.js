@@ -39,13 +39,16 @@ export const login = (credentials, displayErr) => dispatch => {
     });
 }
 
-export const signup = credentials => dispatch => {
+export const signup = (credentials, displayErr) => dispatch => {
   axios.post('/api/auth/signup', credentials)
     .then(res => {
       dispatch(setUser(res.data));
       browserHistory.push('/');
     })
-    .catch(err => console.error('Unable to sign up', err));
+    .catch(err => {
+      console.error('Unable to sign up', err)
+      displayErr('Issue with sign up');
+    });
 }
 
 export const retrieveLoggedInUser = () => dispatch => {
