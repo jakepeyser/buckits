@@ -1,8 +1,8 @@
-const db  = require('../server/db');
-const User  = require('../server/db/models/user');
-const Bluebird  = require('bluebird');
+import db from '../server/db'
+import User from '../server/db/models/user'
+import Bluebird from 'bluebird'
 
-const chai  = require('chai');
+import chai from 'chai'
 chai.use(require('chai-things'));
 chai.use(require('chai-properties'));
 const expect = chai.expect;

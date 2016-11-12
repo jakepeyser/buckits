@@ -12,11 +12,18 @@ import App from './components/App';
 import DiscoverContainer from './components/discover/DiscoverContainer';
 import SigninContainer from './components/signin/SigninContainer';
 
+// Redux thunks
+import { fetchGoals } from './redux/goals'
+
+// Route hooks
+const appEnter = () => {
+  store.dispatch(fetchGoals());
+}
+
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/" component={App}>
-        <Route path="/discover" component={DiscoverContainer} />
+      <Route path="/" component={App} onEnter={appEnter}>
         <Route path="/sign-in" component={SigninContainer} form="sign-in"/>
         <Route path="/sign-up" component={SigninContainer} form="sign-up"/>
         <IndexRoute component={DiscoverContainer} />
