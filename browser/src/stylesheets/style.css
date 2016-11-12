@@ -15,7 +15,13 @@ body,html {
 
 .content {
   min-height: calc(100vh - 55px);
-  padding-top: 5.6em;
+  padding-top: 5em;
+  display: flex;
+  justify-content: center;
+}
+
+.form-submit-error {
+  color: red;
 }
 
 /* Nav bar */
@@ -43,4 +49,27 @@ body,html {
 /* navbar icons */
 .navbar-item > a > span {
   padding: 0 16px;
+}
+
+/* Nav bar */
+
+#sign-in {
+  width: 100%;
+}
+
+.sign-in-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.sign-in-form-submit-div {
+  padding-top: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.sign-in-form-submit-div button {
+  margin: .5em 0;
 }
