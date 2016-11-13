@@ -1,6 +1,7 @@
 const db = require('../db');
 const Goal = db.model('goal');
 const User = db.model('user');
+const Snippet = db.model('snippet');
 const router = require('express').Router();
 
 // --------------------> '/goals/' <-----------------------
@@ -33,15 +34,35 @@ router.get('/', (req, res, next) => {
 
 // -------------------> '/goals/:goalId' <---------------------
 
-// Get the goal from the DB and place on req object
-router.param('goalId', (req, res, next, theGoalId) => {
-  Goal.findById(theGoalId)
-    .then(goal => {
-      req.goal = goal;
-      return next();
-    })
-    .catch(next);
+// Retrieve a single goal
+router.get('/:goalId', (req, res, next) => {
+  Goal.findOne({
+    where: { id: req.params.goalId },
+    include: [{ model: User, attributes: ['id'] },
+              { model: Snippet, attributes: ['id', 'title', 'description'] }]
+  })
+  .then(goal => {
+    // Calculate the likes, remove associated users, and
+    // Check if the logged in user has liked this goal
+    goal.dataValues.liked =
+      goal.users.find(user => user.id === req.session.userId) !== undefined ? true : false;
+
+    goal.dataValues.likes = goal.users.length;
+    delete goal.dataValues.users;
+    return res.send(goal)
+  })
+  .catch(next);
 });
+
+// Get the goal from the DB and place on req object
+// router.param('goalId', (req, res, next, theGoalId) => {
+//   Goal.findById(theGoalId)
+//     .then(goal => {
+//       req.goal = goal;
+//       return next();
+//     })
+//     .catch(next);
+// });
 
 // -----------------> '/goals/:goalId/like' <-------------------
 
@@ -54,7 +75,7 @@ router.post('/:goalId/like', (req, res, next) => {
   }
 
   return User.findById(req.session.userId)
-  .then(user => user.addGoal(req.goal))
+  .then(user => user.addGoal(req.params.goalId))
   .then(() => res.sendStatus(201))
   .catch(next);
 });
@@ -68,7 +89,7 @@ router.delete('/:goalId/like', (req, res, next) => {
   }
 
   return User.findById(req.session.userId)
-  .then(user => user.removeGoal(req.goal))
+  .then(user => user.removeGoal(req.params.goalId))
   .then(() => res.sendStatus(204))
   .catch(next);
 });

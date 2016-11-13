@@ -19,6 +19,9 @@ import { axiosResponse } from './utils.js'
 import { RETRIEVED_GOALS,
          retrievedGoals,
          fetchGoals } from '../browser/react/redux/goals'
+import { RETRIEVED_GOAL,
+         retrievedGoal,
+         fetchGoal } from '../browser/react/redux/goal'
 
 describe('Goal', () => {
   before('wait for the db', function(done) {
@@ -145,10 +148,13 @@ describe('Goal', () => {
   describe('Redux', () => {
 
     let testGoals;
+    let curGoal;
     beforeEach('Create testing store from reducer', () => {
       testGoals = new Array(3).fill().map((val, i) => {
         return { id: i, name: `Product #${i}` }
       });
+      let snippets = [{ goal_id: testGoals[0].id, title: 'Overview', description: 'This is a test' }];
+      curGoal = Object.assign(snippets, testGoals[0]);
     });
 
     describe('action creators', () => {
@@ -157,6 +163,14 @@ describe('Goal', () => {
         expect(action).to.be.deep.equal({
           type: RETRIEVED_GOALS,
           goals: testGoals
+        });
+      });
+
+      it(`${RETRIEVED_GOAL} returns expected action`, () => {
+        const action = retrievedGoal(curGoal);
+        expect(action).to.be.deep.equal({
+          type: RETRIEVED_GOAL,
+          goal: curGoal
         });
       });
     });
@@ -172,9 +186,22 @@ describe('Goal', () => {
         expect(currentStoreState.goals).to.be.deep.equal([]);
       });
 
+      it('has initial state of null current goal', () => {
+        const currentStoreState = testingStore.getState();
+        expect(currentStoreState.currentGoal).to.be.equal(null);
+      });
+
       it(`reducing on ${RETRIEVED_GOALS}`, () => {
         testingStore.dispatch(retrievedGoals(testGoals));
         expect(testingStore.getState().goals).to.be.deep.equal(testGoals);
+      });
+
+      it(`reducing on ${RETRIEVED_GOAL}`, () => {
+        testingStore.dispatch(retrievedGoals(testGoals));
+        testingStore.dispatch(retrievedGoal(curGoal));
+        expect(testingStore.getState().currentGoal).to.be.equal(curGoal.id);
+        let updatedGoal = testingStore.getState().goals.find(goal => goal.id === curGoal.id)
+        expect(updatedGoal).to.be.equal(curGoal);
       });
 
       let axiosMethod;
@@ -194,6 +221,20 @@ describe('Goal', () => {
           let mock = sinon.mock(axios).expects('get').once().withArgs('/api/goals?')
             .returns(axiosResponse(testGoals));
           fetchGoals()(fakeDispatch);
+          mock.verify();
+        });
+
+        it('retrieving a single goal asynchronously', (done) => {
+          const fakeDispatch = (dispatchedItem) => {
+            testingStore.dispatch(dispatchedItem);
+            expect(testingStore.getState().currentGoal).to.be.equal(curGoal.id);
+            done();
+          }
+
+          axiosMethod = 'get';
+          let mock = sinon.mock(axios).expects('get').once()// .withArgs('/api/goal/0')
+            .returns(axiosResponse(curGoal));
+          fetchGoal(curGoal.id)(fakeDispatch);
           mock.verify();
         });
       })

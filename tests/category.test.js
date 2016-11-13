@@ -31,13 +31,16 @@ describe('Category', () => {
       .then(() => {
         Bluebird.all([
           Category.create({
-            category: 'Travel'
+            category: 'Travel',
+            action: 'travel to'
           }),
           Category.create({
-            category: 'Education'
+            category: 'Education',
+            action: 'learn to'
           }),
           Category.create({
-            category: 'Adventure'
+            category: 'Adventure',
+            action: 'go'
           })
         ])
         .then(() => done())
@@ -51,7 +54,7 @@ describe('Category', () => {
     let testCategories;
     beforeEach('Create testing store from reducer', () => {
       testCategories = new Array(3).fill().map((val, i) => {
-        return { id: i, name: `Category #${i}` }
+        return { id: i, category: `Category #${i}`, action: 'do' }
       });
     });
 
@@ -112,7 +115,7 @@ describe('Category', () => {
           .expect(200)
           .then(res => {
             res.body.forEach(category => {
-              expect(category).to.contain.keys(['id', 'category']);
+              expect(category).to.contain.keys(['id', 'category', 'action']);
             })
           });
       });

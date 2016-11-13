@@ -2,6 +2,7 @@
 
 if (process.env.NODE_ENV !== 'production')
   require('dotenv').config();
+
 const db = require('./');
 const User = db.model('user');
 const Goal = db.model('goal');
@@ -10,8 +11,8 @@ const chalk = require('chalk');
 
 const tables = {
   category: [
-    { category: 'Travel' },
-    { category: 'Education' }
+    { category: 'Travel', action: 'travel to' },
+    { category: 'Education', action: 'learn' }
   ],
   goal: [
     { name: 'Berlin', banner_pic_url: 'https://afar-production.imgix.net/uploads/destination/headers/images/U7tCoW7VKN/original_BERLIN_banner.jpg?1473269740?ixlib=rails-0.3.0&w=985&h=380&fit=crop',
