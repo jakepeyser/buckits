@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { fetchGoals } from './goals'
 import { browserHistory } from 'react-router';
+import { isBrowser } from '../utils'
 
 /* -----------------    ACTIONS     ------------------ */
 
@@ -32,8 +33,10 @@ export const login = (credentials, displayErr) => dispatch => {
   axios.post('/api/auth/login', credentials)
     .then(res => {
       dispatch(setUser(res.data));
-      dispatch(fetchGoals());
-      browserHistory.push('/');
+      if (isBrowser()) {
+        dispatch(fetchGoals());
+        browserHistory.push('/');
+      }
     })
     .catch(err => {
       console.error('Unable to log in', err)
@@ -45,8 +48,10 @@ export const signup = (credentials, displayErr) => dispatch => {
   axios.post('/api/auth/signup', credentials)
     .then(res => {
       dispatch(setUser(res.data));
-      dispatch(fetchGoals());
-      browserHistory.push('/');
+      if (isBrowser()) {
+        dispatch(fetchGoals());
+        browserHistory.push('/');
+      }
     })
     .catch(err => {
       console.error('Unable to sign up', err)
@@ -67,8 +72,10 @@ export const logout = () => dispatch => {
   axios.delete('/api/auth/logout')
     .then(() => {
       dispatch(removeUser());
-      dispatch(fetchGoals());
-      browserHistory.push('/');
+      if (isBrowser()) {
+        dispatch(fetchGoals());
+        browserHistory.push('/');
+      }
     })
     .catch(err => console.error('Unable to logout', err));
 }

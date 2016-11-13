@@ -327,8 +327,16 @@ describe('User', () => {
         expect(testingStore.getState().user).to.be.deep.equal({});
       });
 
-      let axiosMethod;
+      let axiosMethod, credentials, displayErr;
       describe('thunks', () => {
+        before('create reusable thunk inputs', () => {
+          credentials = {
+            email: 'johndoe@example.com',
+            password: '123'
+          };
+          displayErr = (err) => {};
+        })
+
         afterEach('Removing Function Mocks', () => {
           axios[axiosMethod].restore();
         })
@@ -343,7 +351,7 @@ describe('User', () => {
           axiosMethod = 'post';
           let mock = sinon.mock(axios).expects(axiosMethod).once().withArgs('/api/auth/login')
             .returns(axiosResponse(testUser));
-          login()(fakeDispatch);
+          login(credentials, displayErr)(fakeDispatch);
           mock.verify();
         });
 
@@ -357,7 +365,7 @@ describe('User', () => {
           axiosMethod = 'post';
           let mock = sinon.mock(axios).expects(axiosMethod).once().withArgs('/api/auth/signup')
             .returns(axiosResponse(testUser));
-          signup()(fakeDispatch);
+          signup(credentials, displayErr)(fakeDispatch);
           mock.verify();
         });
 
