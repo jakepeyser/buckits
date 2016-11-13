@@ -11,7 +11,7 @@ const PATHS = {
 }
 const PORT = process.env.PORT || 3000;
 const chalk = require('chalk');
-if (process.env.NODE_ENV !== 'production')
+if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'testing')
   require('dotenv').config();
 
 // Logging, static, body-parser and session middleware
