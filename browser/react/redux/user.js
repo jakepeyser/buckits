@@ -1,15 +1,17 @@
 import axios from 'axios';
+import { fetchGoals } from './goals'
 import { browserHistory } from 'react-router';
+import { isBrowser } from '../utils'
 
 /* -----------------    ACTIONS     ------------------ */
 
-const SET_USER    = 'SET_USER'
-const REMOVE_USER = 'REMOVE_USER'
+export const SET_USER    = 'SET_USER'
+export const REMOVE_USER = 'REMOVE_USER'
 
 /* ------------   ACTION CREATORS     ------------------ */
 
-const setUser   = user => ({ type: SET_USER, user })
-const removeUser  = () => ({ type: REMOVE_USER })
+export const setUser   = user => ({ type: SET_USER, user })
+export const removeUser  = () => ({ type: REMOVE_USER })
 
 /* ------------       REDUCER     ------------------ */
 
@@ -31,7 +33,10 @@ export const login = (credentials, displayErr) => dispatch => {
   axios.post('/api/auth/login', credentials)
     .then(res => {
       dispatch(setUser(res.data));
-      browserHistory.push('/');
+      if (isBrowser()) {
+        dispatch(fetchGoals());
+        browserHistory.push('/');
+      }
     })
     .catch(err => {
       console.error('Unable to log in', err)
@@ -43,7 +48,10 @@ export const signup = (credentials, displayErr) => dispatch => {
   axios.post('/api/auth/signup', credentials)
     .then(res => {
       dispatch(setUser(res.data));
-      browserHistory.push('/');
+      if (isBrowser()) {
+        dispatch(fetchGoals());
+        browserHistory.push('/');
+      }
     })
     .catch(err => {
       console.error('Unable to sign up', err)
@@ -55,7 +63,7 @@ export const retrieveLoggedInUser = () => dispatch => {
   axios.get('/api/auth/me')
     .then(res => {
       if (res.data)
-        dispatch(setUser(res.data))
+        dispatch(setUser(res.data));
     })
     .catch(err => console.error('Unable to retrieve logged in user', err));
 }
@@ -64,7 +72,10 @@ export const logout = () => dispatch => {
   axios.delete('/api/auth/logout')
     .then(() => {
       dispatch(removeUser());
-      browserHistory.push('/');
+      if (isBrowser()) {
+        dispatch(fetchGoals());
+        browserHistory.push('/');
+      }
     })
     .catch(err => console.error('Unable to logout', err));
 }

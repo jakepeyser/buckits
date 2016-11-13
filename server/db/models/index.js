@@ -8,7 +8,9 @@ const Snippet = require('./snippet');
 Goal.belongsTo(Category);
 Goal.hasMany(Snippet);
 Goal.belongsToMany(Tag, { through: 'goalTag' });
+Tag.belongsToMany(Goal, { through: 'goalTag' });
 Goal.belongsToMany(User, { through: 'like' });
+User.belongsToMany(Goal, { through: 'like' });
 
 module.exports = {
   Goal,

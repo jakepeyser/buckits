@@ -1,9 +1,9 @@
-const db  = require('../server/db');
-const Goal  = require('../server/db/models/goal');
-const Snippet  = require('../server/db/models/snippet');
-const Bluebird  = require('bluebird');
+import db from '../server/db'
+import Goal from '../server/db/models/goal'
+import Snippet from '../server/db/models/snippet'
+import Bluebird from 'bluebird'
 
-const chai  = require('chai');
+import chai from 'chai'
 chai.use(require('chai-things'));
 chai.use(require('chai-properties'));
 const expect = chai.expect;

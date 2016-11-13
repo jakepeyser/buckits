@@ -1,4 +1,4 @@
-## Buckets
+## Buckits
 
 Helping you complete your bucket list, drop by drop
 
