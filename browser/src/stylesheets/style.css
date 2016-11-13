@@ -51,7 +51,7 @@ body,html {
   padding: 0 16px;
 }
 
-/* Nav bar */
+/* Sign-in/Sign-up */
 
 #sign-in {
   width: 100%;
@@ -72,4 +72,89 @@ body,html {
 
 .sign-in-form-submit-div button {
   margin: .5em 0;
+}
+
+/* Goals Search */
+
+#goals-search {
+  width: 100%;
+}
+
+.goal-list {
+  padding-top: 15px;
+}
+
+.goal-list > a:hover {
+  text-decoration: none;
+}
+
+.goal-list-item {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.goal-list-item > a {
+  width: 100%;
+}
+
+.goal-list-pic-wrapper {
+  width: 100%;
+  background: 
+    linear-gradient(
+      to top,
+      rgba(0, 0, 0, .8),
+      rgba(0, 0, 0, 1)
+    );
+}
+
+.goal-list-pic-wrapper > img {
+  width: 100%;
+  min-height: 200px;
+  max-height: 350px;
+
+  -webkit-transition: all 0.25s linear;
+      -moz-transition: all 0.25s linear;
+      -ms-transition: all 0.25s linear;
+        -o-transition: all 0.25s linear;
+          transition: all 0.25s linear;
+}
+
+.goal-list-pic-wrapper:hover > img {
+  opacity: .5;
+}
+
+.goal-list-item > .goal-list-item-loc,
+.goal-list-item > .goal-list-item-banner {
+  z-index: 1;
+  display: flex;
+  color: white;
+}
+
+.goal-list-item-loc::before {
+  content: '';
+  background-image:url('../images/map_pin.png');
+  background-repeat: no-repeat;
+  background-size: 13px 20px;
+  padding-right: 17px;
+}
+
+.goal-list-item-loc {
+  position: absolute;
+  padding: 10px 10px 0 0;
+  font-size: 1.2em;
+}
+
+.goal-list-item-banner {
+  position: relative;
+  flex-direction: row;
+  bottom: 46px;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.goal-list-item-banner > h3 {
+  margin: 0;
+  padding: 10px 0 10px 10px;
 }
