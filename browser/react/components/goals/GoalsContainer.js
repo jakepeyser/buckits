@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Goals from './Goals';
+import { likeGoal, unlikeGoal } from '../../redux/goals'
 const initialState = {
   search: '', category: 0
 };
@@ -26,19 +27,31 @@ const GoalSearchDecorator = GoalsComponent => {
           .indexOf(this.state.search.toLowerCase()) !== -1 &&
           (!this.state.category || this.state.category === goal.category_id);
       })
-      console.log(goals)
+
       return (
         <GoalsComponent
         categories={this.props.categories}
         curCategory={this.state.category}
         goals={goals}
+        loggedIn={Object.keys(this.props.user).length}
+        like={this.props.like}
+        unlike={this.props.unlike}
+        add={this.props.add}
+        done={this.props.done}
         handleChange={this.handleChange}/>
       )
     }
   }
 }
 
-const mapStateToProps = ({ goals, categories }) =>
-  ({ goals, categories });
+const mapStateToProps = ({ goals, categories, user }) =>
+  ({ goals, categories, user });
 
-export default connect(mapStateToProps)(GoalSearchDecorator(Goals));
+const mapDispatchToProps = dispatch => ({
+  like: (goalId) => dispatch(likeGoal(goalId)),
+  unlike: (goalId) => dispatch(unlikeGoal(goalId)),
+  add: (goalId) => console.log('Stub for add'),
+  done: (goalId) => console.log('Stub for done')
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(GoalSearchDecorator(Goals));

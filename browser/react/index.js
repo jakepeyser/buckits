@@ -13,6 +13,7 @@ import GoalsContainer from './components/goals/GoalsContainer';
 import SigninContainer from './components/signin/SigninContainer';
 
 // Redux thunks
+import { retrieveLoggedInUser } from './redux/user'
 import { fetchGoals } from './redux/goals'
 import { fetchCategories } from './redux/categories'
 
@@ -20,6 +21,7 @@ import { fetchCategories } from './redux/categories'
 const appEnter = () => {
   store.dispatch(fetchCategories());
   store.dispatch(fetchGoals());
+  store.dispatch(retrieveLoggedInUser());
 }
 
 ReactDOM.render(

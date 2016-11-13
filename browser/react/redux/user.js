@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { fetchGoals } from './goals'
 import { browserHistory } from 'react-router';
 
 /* -----------------    ACTIONS     ------------------ */
@@ -31,6 +32,7 @@ export const login = (credentials, displayErr) => dispatch => {
   axios.post('/api/auth/login', credentials)
     .then(res => {
       dispatch(setUser(res.data));
+      dispatch(fetchGoals());
       browserHistory.push('/');
     })
     .catch(err => {
@@ -43,6 +45,7 @@ export const signup = (credentials, displayErr) => dispatch => {
   axios.post('/api/auth/signup', credentials)
     .then(res => {
       dispatch(setUser(res.data));
+      dispatch(fetchGoals());
       browserHistory.push('/');
     })
     .catch(err => {
@@ -55,7 +58,7 @@ export const retrieveLoggedInUser = () => dispatch => {
   axios.get('/api/auth/me')
     .then(res => {
       if (res.data)
-        dispatch(setUser(res.data))
+        dispatch(setUser(res.data));
     })
     .catch(err => console.error('Unable to retrieve logged in user', err));
 }
@@ -64,6 +67,7 @@ export const logout = () => dispatch => {
   axios.delete('/api/auth/logout')
     .then(() => {
       dispatch(removeUser());
+      dispatch(fetchGoals());
       browserHistory.push('/');
     })
     .catch(err => console.error('Unable to logout', err));

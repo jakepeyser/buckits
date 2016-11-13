@@ -134,7 +134,7 @@ body,html {
 
 .goal-list-item-loc::before {
   content: '';
-  background-image:url('../images/map_pin.png');
+  background-image: url('../images/map_pin.png');
   background-repeat: no-repeat;
   background-size: 13px 20px;
   padding-right: 17px;
@@ -149,6 +149,7 @@ body,html {
 .goal-list-item-banner {
   position: relative;
   flex-direction: row;
+  justify-content: space-between;
   bottom: 46px;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.6);
@@ -157,4 +158,55 @@ body,html {
 .goal-list-item-banner > h3 {
   margin: 0;
   padding: 10px 0 10px 10px;
+}
+
+.goal-list-item-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 10px;
+}
+
+.goal-list-item-actions > div:hover {
+  cursor: pointer;
+}
+
+.goal-list-item-actions > div + div {
+  margin-left: 12px;
+}
+
+.like {
+  background-image: url('../images/actions/like.png');
+  background-repeat: no-repeat;
+  background-size: 35px;
+  width: 35px;
+  height: 31px;
+}
+.liked {
+  background-image: url('../images/actions/like_active.png');
+}
+.like:hover {
+  background-image: url('../images/actions/like_hover.png');
+}
+
+.done {
+  background-image: url('../images/actions/done.png');
+  background-repeat: no-repeat;
+  background-size: 36px;
+  width: 35px;
+  height: 26px;
+}
+.done:hover {
+  background-image: url('../images/actions/done_hover.png');
+}
+
+.add {
+  background-image: url('../images/actions/add.png');
+  background-repeat: no-repeat;
+  background-size: 33px;
+  width: 33px;
+  height: 33px;
+}
+.add:hover {
+  background-image: url('../images/actions/add_hover.png');
 }
