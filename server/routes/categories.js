@@ -6,7 +6,7 @@ const router = require('express').Router();
 
 // Retrieve all categories
 router.get('/', (req, res, next) => {
-  Category.findAll({ attributes: ['id', 'category'] })
+  Category.findAll({ attributes: ['id', 'category', 'action'] })
   .then(categories => res.send(categories))
   .catch(next);
 });

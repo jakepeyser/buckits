@@ -1,7 +1,7 @@
 // Check whether script is being run in browser or Node
 export const isBrowser = () => {
   try {
-    return this === window;
+    return window;
   } catch (e) {
     return false;
   }

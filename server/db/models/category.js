@@ -5,5 +5,9 @@ module.exports = db.define('category', {
   category: {
     type: DataTypes.STRING(),
     allowNull: false
+  },
+  action: {
+    type: DataTypes.STRING(),
+    allowNull: false
   }
 });

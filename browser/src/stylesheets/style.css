@@ -210,3 +210,43 @@ body,html {
 .add:hover {
   background-image: url('../images/actions/add_hover.png');
 }
+
+/* Goal */
+#goal {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.goal-banner {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+}
+
+.goal-header {
+  position: absolute;
+  z-index: 1;
+  text-align: center;
+  color: white;
+}
+
+.goal-header > h1 {
+  margin: 0;
+  font-size: 4.5em;
+}
+
+.goal-header > h3 {
+  margin: 0;
+  font-size: 1.8em;
+}
+
+.goal-banner-img {
+  width: 100%;
+  min-height: 200px;
+  max-height: 300px;
+  opacity: .8;
+}
