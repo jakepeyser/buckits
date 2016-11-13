@@ -1,5 +1,5 @@
 import db from '../server/db'
-import Goal from '../server/db/models/goal'
+import Category from '../server/db/models/category'
 import Bluebird from 'bluebird'
 
 // Unit testing libraries
@@ -20,19 +20,24 @@ import { RETRIEVED_CATEGORIES,
          retrievedCategories,
          fetchCategories } from '../browser/react/redux/categories'
 
+// Express libraries
+const supertest = require('supertest-as-promised');
+const app = require('../server/app');
+const agent = supertest.agent(app);
+
 describe('Category', () => {
   before('wait for the db', function(done) {
     db.didSync
       .then(() => {
         Bluebird.all([
-          Goal.create({
-            name: 'Test Goal 1'
+          Category.create({
+            category: 'Travel'
           }),
-          Goal.create({
-            name: 'Test Goal 2'
+          Category.create({
+            category: 'Education'
           }),
-          Goal.create({
-            name: 'Test Goal 3'
+          Category.create({
+            category: 'Adventure'
           })
         ])
         .then(() => done())
@@ -41,8 +46,8 @@ describe('Category', () => {
   });
 
   after('clear db', () => db.didSync)
-  describe('Redux', () => {
 
+  describe('Redux', () => {
     let testCategories;
     beforeEach('Create testing store from reducer', () => {
       testCategories = new Array(3).fill().map((val, i) => {
@@ -98,5 +103,20 @@ describe('Category', () => {
       })
     });
   });
+
+  describe('/categories routes', () => {
+    describe('GET /', () => {
+      it('responds with 200 and categories on success', () => {
+        return agent
+          .get('/api/categories')
+          .expect(200)
+          .then(res => {
+            res.body.forEach(category => {
+              expect(category).to.contain.keys(['id', 'category']);
+            })
+          });
+      });
+    })
+  })
 })
 

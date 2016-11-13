@@ -2,14 +2,33 @@ import db from '../server/db'
 import User from '../server/db/models/user'
 import Bluebird from 'bluebird'
 
+// Unit testing libraries
 import chai from 'chai'
 chai.use(require('chai-things'));
 chai.use(require('chai-properties'));
 const expect = chai.expect;
 
+// Express libraries
 const supertest = require('supertest-as-promised');
 const app = require('../server/app');
 const agent = supertest.agent(app);
+
+// Redux testing libraries
+import sinon from 'sinon'
+import axios from 'axios';
+import { createStore } from 'redux'
+import rootReducer from '../browser/react/redux/index'
+import { axiosResponse } from './utils'
+
+// Redux exports from /user
+import { SET_USER,
+         setUser,
+         login,
+         signup,
+         retrieveLoggedInUser } from '../browser/react/redux/user'
+import { REMOVE_USER,
+         removeUser,
+         logout } from '../browser/react/redux/user'
 
 describe('User', () => {
   before('wait for the db', function(done) {
@@ -258,4 +277,118 @@ describe('User', () => {
       });
     })
   })
+  describe('Redux', () => {
+
+    let testUser;
+    beforeEach('Create test user', () => {
+      testUser = {
+        id: 0,
+        first_name: 'John',
+        last_name: 'Doe',
+        email: 'johndoe@example.com'
+      }
+    });
+
+    describe('action creators', () => {
+      it(`${SET_USER} returns expected action`, () => {
+        const action = setUser(testUser);
+        expect(action).to.be.deep.equal({
+          type: SET_USER,
+          user: testUser
+        });
+      });
+
+      it(`${REMOVE_USER} returns expected action`, () => {
+        const action = removeUser();
+        expect(action).to.be.deep.equal({
+          type: REMOVE_USER
+        });
+      });
+    });
+
+    describe('store/reducer', () => {
+      let testingStore;
+      beforeEach('Create testing store from reducer', () => {
+        testingStore = createStore(rootReducer);
+      });
+
+      it('has initial state of empty user object', () => {
+        const currentStoreState = testingStore.getState();
+        expect(currentStoreState.user).to.be.deep.equal({});
+      });
+
+      it(`reducing on ${SET_USER}`, () => {
+        testingStore.dispatch(setUser(testUser));
+        expect(testingStore.getState().user).to.be.deep.equal(testUser);
+      });
+
+      it(`reducing on ${REMOVE_USER}`, () => {
+        testingStore.dispatch(removeUser());
+        expect(testingStore.getState().user).to.be.deep.equal({});
+      });
+
+      let axiosMethod;
+      describe('thunks', () => {
+        afterEach('Removing Function Mocks', () => {
+          axios[axiosMethod].restore();
+        })
+
+        it('logging in user asynchronously', (done) => {
+          const fakeDispatch = (dispatchedItem) => {
+            testingStore.dispatch(dispatchedItem);
+            expect(testingStore.getState().user).to.be.deep.equal(testUser);
+            done();
+          }
+
+          axiosMethod = 'post';
+          let mock = sinon.mock(axios).expects(axiosMethod).once().withArgs('/api/auth/login')
+            .returns(axiosResponse(testUser));
+          login()(fakeDispatch);
+          mock.verify();
+        });
+
+        it('signing up user asynchronously', (done) => {
+          const fakeDispatch = (dispatchedItem) => {
+            testingStore.dispatch(dispatchedItem);
+            expect(testingStore.getState().user).to.be.deep.equal(testUser);
+            done();
+          }
+
+          axiosMethod = 'post';
+          let mock = sinon.mock(axios).expects(axiosMethod).once().withArgs('/api/auth/signup')
+            .returns(axiosResponse(testUser));
+          signup()(fakeDispatch);
+          mock.verify();
+        });
+
+        it('retrieving logged in user asynchronously', (done) => {
+          const fakeDispatch = (dispatchedItem) => {
+            testingStore.dispatch(dispatchedItem);
+            expect(testingStore.getState().user).to.be.deep.equal(testUser);
+            done();
+          }
+
+          axiosMethod = 'get';
+          let mock = sinon.mock(axios).expects(axiosMethod).once().withArgs('/api/auth/me')
+            .returns(axiosResponse(testUser));
+          retrieveLoggedInUser()(fakeDispatch);
+          mock.verify();
+        });
+
+        it('log out user asynchronously', (done) => {
+          const fakeDispatch = (dispatchedItem) => {
+            testingStore.dispatch(dispatchedItem);
+            expect(testingStore.getState().user).to.be.deep.equal({});
+            done();
+          }
+
+          axiosMethod = 'delete';
+          let mock = sinon.mock(axios).expects(axiosMethod).once().withArgs('/api/auth/logout')
+            .returns(axiosResponse());
+          logout()(fakeDispatch);
+          mock.verify();
+        });
+      })
+    });
+  });
 })
