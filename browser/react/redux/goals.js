@@ -23,7 +23,7 @@ export default function reducer(currentGoals = initialGoals, action) {
     case RETRIEVED_GOAL:
       return currentGoals.map(goal =>
         goal.id === action.goal.id ? action.goal : goal
-      )
+      );
     case LIKED_GOAL:
       return currentGoals.map(goal => {
         if (goal.id === action.goalId) goal.liked = true;

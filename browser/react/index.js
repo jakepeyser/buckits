@@ -24,10 +24,10 @@ const appEnter = () => {
   store.dispatch(fetchCategories());
   store.dispatch(fetchGoals());
   store.dispatch(retrieveLoggedInUser());
-}
+};
 const goalEnter = nextState => {
   store.dispatch(fetchGoal(nextState.params.goalId));
-}
+};
 
 ReactDOM.render(
   <Provider store={store}>

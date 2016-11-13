@@ -143,6 +143,31 @@ describe('Goal', () => {
         })
         .catch(done);
       })
+
+      it('throws an error for invalid banner picture url', (done) => {
+        let goal1 = Goal.build({
+          name: 'Test Goal 1',
+          banner_pic_url: ''
+        });
+        let goal2 = Goal.build({
+          name: 'Test Goal 2',
+          banner_pic_url: 'im_not_valid'
+        });
+
+        Bluebird.all([ goal1.validate(), goal2.validate()])
+        .then(errs => {
+          errs.forEach(err => {
+            expect(err).to.be.an('object');
+            expect(err).to.be.an.instanceOf(Error);
+            expect(err.errors[0]).to.have.properties({
+              path: 'banner_pic_url',
+              type: 'Validation error'
+            });
+          })
+          done();
+        })
+        .catch(done);
+      })
     })
   })
   describe('Redux', () => {

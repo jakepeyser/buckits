@@ -94,6 +94,4 @@ router.delete('/:goalId/like', (req, res, next) => {
   .catch(next);
 });
 
-
-
 module.exports = router;
