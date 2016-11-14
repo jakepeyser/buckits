@@ -51,16 +51,15 @@ body,html {
   padding: 0 16px;
 }
 
-.profile-icon {
-  content: '';
-  background-image: url('https://premium.wpmudev.org/forums/?bb_attachments=712464&bbat=47619&inline');
-  background-repeat: no-repeat;
+
+
+.profile-icon > img {
   background-size: 44px;
   height: 44px;
   width: 44px;
 }
 
-.profile-icon:hover {
+.profile-icon > img:hover {
   cursor: pointer;
 }
 

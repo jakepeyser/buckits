@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router'
 import { primary, primaryText } from '../colors'
+import { fullName } from '../../utils'
 
 // Material theme
 import {ToolbarGroup} from 'material-ui';
@@ -76,7 +77,10 @@ export default class Navbar extends React.Component {
             <div className="navbar-item">
               {/* Account Menu popover defined below */}
               <div className="profile-icon"
-                onTouchTap={this.handleAccountMenuOpen}>
+                onTouchTap={ this.handleAccountMenuOpen }>
+                <img
+                  src={ user.profile_pic_url }
+                  alt={ fullName(user) } />
               </div>
             </div> :
             <div className="navbar-item">
