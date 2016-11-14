@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { LIKED_GOAL } from './goals'
+import { UNLIKED_GOAL } from './goals'
 
 /* -----------------    ACTIONS     ------------------ */
 
@@ -11,11 +13,19 @@ export const retrievedGoal = goal =>
 
 /* ------------       REDUCER     ------------------ */
 
-const initialGoal = null;
+const initialGoal = {};
 export default function reducer(currentGoal = initialGoal, action) {
   switch (action.type) {
     case RETRIEVED_GOAL:
-      return action.goal.id;
+      return action.goal;
+    case LIKED_GOAL:
+      return currentGoal.id === action.goalId ?
+        Object.assign({}, currentGoal, { liked: true }) :
+        currentGoal;
+    case UNLIKED_GOAL:
+      return currentGoal.id === action.goalId ?
+        Object.assign({}, currentGoal, { liked: false }) :
+        currentGoal;
     default:
       return currentGoal;
   }

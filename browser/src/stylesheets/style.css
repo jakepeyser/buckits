@@ -4,7 +4,7 @@ body,html {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-family: "Catamaran", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   color: black;
 }
 
@@ -158,12 +158,14 @@ body,html {
 .goal-list-item-banner > h3 {
   margin: 0;
   padding: 10px 0 10px 10px;
+  font-family: Radaway;
 }
 
 .goal-list-item-actions {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   padding-right: 10px;
 }
 
@@ -175,12 +177,23 @@ body,html {
   margin-left: 12px;
 }
 
+.action-padders {
+  padding: 10px 0 10px 10px;
+}
+
+.action-padders > div + div {
+  margin-left: 50px;
+}
+
 .like {
-  background-image: url('../images/actions/like.png');
+  background-image: url('../images/actions/like_white.png');
   background-repeat: no-repeat;
   background-size: 35px;
   width: 35px;
   height: 31px;
+}
+.like-black {
+  background-image: url('../images/actions/like_black.png');
 }
 .liked {
   background-image: url('../images/actions/like_active.png');
@@ -190,22 +203,28 @@ body,html {
 }
 
 .done {
-  background-image: url('../images/actions/done.png');
+  background-image: url('../images/actions/done_white.png');
   background-repeat: no-repeat;
   background-size: 36px;
   width: 35px;
   height: 26px;
+}
+.done-black {
+  background-image: url('../images/actions/done_black.png');
 }
 .done:hover {
   background-image: url('../images/actions/done_hover.png');
 }
 
 .add {
-  background-image: url('../images/actions/add.png');
+  background-image: url('../images/actions/add_white.png');
   background-repeat: no-repeat;
   background-size: 33px;
   width: 33px;
   height: 33px;
+}
+.add-black {
+  background-image: url('../images/actions/add_black.png');
 }
 .add:hover {
   background-image: url('../images/actions/add_hover.png');
@@ -236,12 +255,14 @@ body,html {
 
 .goal-header > h1 {
   margin: 0;
+  font-family: Radaway;
   font-size: 4.5em;
 }
 
 .goal-header > h3 {
   margin: 0;
-  font-size: 1.8em;
+  font-size: 1.6em;
+  font-weight: 400;
 }
 
 .goal-banner-img {
@@ -249,4 +270,65 @@ body,html {
   min-height: 200px;
   max-height: 300px;
   opacity: .8;
+}
+
+.goal-main-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding-right: 10px;
+  font-size: 1.4em;
+  font-weight: 500;
+}
+
+.goal-main-info > p {
+  margin: 15px 0;
+}
+
+.goal-loc::before {
+  content: '';
+  background-image: url('../images/map_pin.png');
+  background-repeat: no-repeat;
+  background-size: 15px 24px;
+  padding-right: 20px;
+}
+
+.goal-loc {
+}
+
+.goal-map {
+  width: 100%;
+  height: 400px;
+  padding-left: 10px;
+}
+
+/* Snippets */
+
+.snippets {
+  padding-right: 10px;
+}
+
+.snippet-titles {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.snippet-titles > h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.3em;
+  font-weight: 400;
+}
+
+.snippet-titles > h3:hover {
+  cursor: pointer;
+  color: #00b6ce;
+}
+
+.selected-snippet {
+  color: #00b6ce;
+}
+
+.snippet-text {
+  text-align: justify;
 }

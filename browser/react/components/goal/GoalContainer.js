@@ -2,14 +2,11 @@ import { connect } from 'react-redux';
 import Goal from './Goal';
 import { likeGoal, unlikeGoal } from '../../redux/goals'
 
-const mapStateToProps = ({ goals, currentGoal, categories, user }) => {
-  let goal = goals.find(goal => goal.id === currentGoal);
-  return {
-    goal,
-    category: goal && categories.find(category => category.id === goal.category_id),
-    loggedIn: Object.keys(user).length
-  }
-};
+const mapStateToProps = ({ currentGoal, categories, user }) => ({
+  goal: currentGoal,
+  category: categories.find(category => category.id === currentGoal.category_id),
+  loggedIn: Object.keys(user).length
+});
 
 const mapDispatchToProps = dispatch => ({
   like: goalId => dispatch(likeGoal(goalId)),
