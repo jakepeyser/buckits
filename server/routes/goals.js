@@ -47,12 +47,25 @@ router.get('/:goalId', (req, res, next) => {
               ]}]
   })
   .then(goal => {
+    // Calculate the added and completed buckets
+    goal.dataValues.added = goal.buckets
+      .filter(bucket => bucket.status === 'in_progress').length;
+    goal.dataValues.completed = goal.buckets
+      .filter(bucket => bucket.status === 'completed').length;
     // Calculate the likes, remove associated users, and
+    goal.dataValues.likes = goal.users.length;
+
     // Check if the logged in user has liked this goal
     goal.dataValues.liked =
       goal.users.find(user => user.id === req.session.userId) !== undefined ? true : false;
 
-    goal.dataValues.likes = goal.users.length;
+    // Map pictures back to flat array
+    goal.dataValues.pictures = goal.buckets
+      .map(bucket => bucket.pictures)
+      .reduce((pics, curPics) => [...pics, ...curPics], []);
+
+    // Remove values front end does not need
+    delete goal.dataValues.buckets;
     delete goal.dataValues.users;
     return res.send(goal)
   })

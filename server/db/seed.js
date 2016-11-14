@@ -44,7 +44,7 @@ const tables = {
     { picture_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/%C3%9Cber_den_D%C3%A4chern_von_Berlin.jpg/310px-%C3%9Cber_den_D%C3%A4chern_von_Berlin.jpg'},
     { picture_url: 'http://www.visitberlin.de/sites/default/files/imagecache/high_l_300_155/I111_Neue_Synagoge_960x768_c_Pierre-Adenis.jpg'},
     { picture_url: 'https://s-media-cache-ak0.pinimg.com/originals/3f/fb/b8/3ffbb8b2b5608f2ecee6f16890935371.jpg'},
-    { picture_url: 'https://www.google.com/search?q=berlin+pictures&espv=2&biw=1405&bih=751&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiRlP3s_6fQAhVJbiYKHScfDIAQ_AUIBigB&dpr=0.9#imgrc=81YfRVR-yVlwNM%3A'},
+    { picture_url: 'https://www.deutschland.de/sites/default/files/styles/stage/public/field_visuals/berlin-spree-molecule-man_a.jpg?itok=H2BNTVaO'},
     { picture_url: 'http://cdn-image.travelandleisure.com/sites/default/files/styles/1600x1000/public/berlin0615-museum.jpg?itok=1MAcLZka'},
     { picture_url: 'http://cdn.ek.aero/english/images/Seoul-1_tcm233-2364446.jpg'},
     { picture_url: 'https://asiatourism.co/wp-content/uploads/2016/05/seoul.jpg'},

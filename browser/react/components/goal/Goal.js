@@ -121,6 +121,17 @@ export default class Goal extends React.Component {
               </Gmaps>
             </div> : null
           }
+          <div className="goal-pics">
+          {
+            goal.pictures && goal.pictures.slice(0, 6).map(pic =>
+              <div className="goal-pic">
+                <img
+                  className="goal-pic-img"
+                  src={pic.picture_url} />
+              </div>
+            )
+          }
+          </div>
           </div>
         </div>
       </div>
