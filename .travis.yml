@@ -5,6 +5,14 @@ cache:
   directories:
   - node_modules
 services:
-  - postgresql
+- postgresql
 install: npm install
 script: npm test && npm run build
+deploy:
+  skip_cleanup: true
+  provider: heroku
+  api_key:
+    secure: M+og/D/pHxpVodeIDR9SYnkXIOnFz1q8PbVpG4yyjbylAVX4n7lm59NGMKmIgii2tV8FfqjSKpvKdcss1kiibEeJ8g/D8e9k98Xc+fKlez/g9nrJfKwK8eIa7Hopj40Fxo8EZSIw/lZ/PhlSEINB2kVSJe/e5d1riomudVhbLp0QGrcOSTt/IoHLev531QTnbCHVd1F5elYsF2Be2bmIR4Tsuw1vDDGiPO+CMAzg8MMKL/dngrziOLlH9OcjT9FcEdYc+R96YJMavn5UIwweXWuOkKAiewH/pimYmy/cA6li4N8e6jg8gGpg+1u9f3p2G27tTPoOhsUNlXOIInGSbS4AEGvKV8CxrFxBSr3wZEOsRfCCCm5fbNBt5Xc0rY2JEwp9Fozt2leKmNpe1Xwq6lutYHBnT9fWzYsv+ZO0JHAEoqaRVWLi/s1HVCzddAulpYNybfLTSNaOvcvoNH53K71i+QHEneUYHxP73xnWaUqQBUrxfvz1jFRA6F/z2gtTqgijG9vp7MFJJgCOsDAsQMVO4ugLRj9O7gFJcBDEA8xmwpUobUjImh5qQ0+lJhcNZEQ/MvmvTwY+9zgvV3R8zPOi8PfqN4iLzeBB9KAPPjYAqO7f7A5ihRiQKG44oYHM1PtPiOgsmB8GFl+0iwJ0caUgu6KCPhKJVCNn45Fzmdo=
+  app:
+    master: buckits
+  run: npm run seed
