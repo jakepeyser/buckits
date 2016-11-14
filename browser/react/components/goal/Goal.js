@@ -7,9 +7,7 @@ import Badge from 'material-ui/Badge';
 export default class Goal extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      curSnippet: props.goal.snippets ? props.goal.snippets[0] : null
-    };
+    this.state = { curSnippet: props.goal.snippets[0] };
   }
 
   // Update selected snippet
@@ -27,12 +25,6 @@ export default class Goal extends React.Component {
 
   render() {
     const { goal, category, loggedIn, like, unlike, add, done } = this.props;
-    if (!goal || !category) return null;
-
-    // Make sure current snippet is not from last selected goal
-    const curSnip = this.state.curSnippet && goal.snippets.findIndex(snip => snip.id === this.state.curSnippet.id) !== -1 ?
-      this.state.curSnippet : goal.snippets[0];
-
     return (
       <div id="goal">
         <Helmet title={ goal.name } />
@@ -91,7 +83,7 @@ export default class Goal extends React.Component {
             {
               goal.snippets && goal.snippets.map(snip =>
                 <h3 key={snip.id}
-                  className={ snip.id === curSnip.id ? 'selected-snippet' : '' }
+                  className={ snip.id === this.state.curSnippet.id ? 'selected-snippet' : '' }
                   onClick={ () => this.snippetChange(snip.id) }>
                   {snip.title}
                 </h3>
@@ -99,7 +91,7 @@ export default class Goal extends React.Component {
             }
             </div>
             <div className="snippet-text col-xs-9">
-              <p>{curSnip.description}</p>
+              <p>{this.state.curSnippet.description}</p>
             </div>
           </div>
           <div className="col-xs-12 col-md-4">
@@ -124,7 +116,7 @@ export default class Goal extends React.Component {
           <div className="goal-pics">
           {
             goal.pictures && goal.pictures.slice(0, 6).map(pic =>
-              <div className="goal-pic">
+              <div key={pic.id} className="goal-pic">
                 <img
                   className="goal-pic-img"
                   src={pic.picture_url} />
@@ -138,61 +130,3 @@ export default class Goal extends React.Component {
     )
   }
 }
-
-// export default ({ goal, category, loggedIn, like, unlike, add, done }) => {
-//   console.log("goal snips:", goal.snippets)
-//   if (!goal || !category) return null;
-//   return (
-//     <div id="goal">
-//       <Helmet title={ goal.name } />
-//       <div className="goal-banner">
-//         <div className="goal-header">
-//           <h3>{`We want to ${category.action}...`}</h3>
-//           <h1>{goal.name}</h1>
-//         </div>
-//         <img
-//           className="goal-banner-img"
-//           alt={goal.name}
-//           src={goal.banner_pic_url} />
-//       </div>
-//       <div className="row">
-//         <div className="col-xs-12 col-md-8 col-lg-9">
-//           <div className="row">
-//             <div className="goal-main-info">
-//             {
-//               goal.location ?
-//                 <p className="goal-loc">{goal.location}</p>
-//                 : null
-//             }
-//             {
-//               goal.price_range ?
-//                 <p className="goal-price">
-//                   <span>{'$$$$'.substring(0, goal.price_range)}</span>
-//                   <span style={{color: '#efeff4'}}>{'$$$$'.substring(0, 4 - goal.price_range)}</span>
-//                 </p>
-//                 : null
-//             }
-//             {/* Average Rating Here */}
-//             </div>
-//           </div>
-//           <div className="row">
-//             <div className="snippet-titles col-xs-3">
-//             {
-//               goal.snippets && goal.snippets.map(snip =>
-//                 <h3 key={snip.id}
-//                   className={ snip.id === currentSnippet ? 'selected-snippet' : '' }
-//                   onClick={ () => snippetChange(snip.id) }>
-//                   {snip.title}
-//                 </h3>
-//               )
-//             }
-//             </div>
-//             <div className="snippet-text col-xs-9">
-//               <p>{curSnip.description}</p>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   )
-// }

@@ -25,8 +25,8 @@ const appEnter = () => {
   store.dispatch(fetchGoals());
   store.dispatch(retrieveLoggedInUser());
 };
-const goalEnter = nextState => {
-  store.dispatch(fetchGoal(nextState.params.goalId));
+const goalEnter = (nextState, replace, callback) => {
+  store.dispatch(fetchGoal(nextState.params.goalId, callback));
 };
 
 ReactDOM.render(

@@ -37,8 +37,11 @@ export default function reducer(currentGoal = initialGoal, action) {
 
 /* ------------       DISPATCHERS     ------------------ */
 
-export const fetchGoal = (goalId) => dispatch => {
+export const fetchGoal = (goalId, cb) => dispatch => {
   axios.get(`/api/goals/${goalId}`)
-    .then(res => dispatch(retrievedGoal(res.data)))
+    .then(res => {
+      dispatch(retrievedGoal(res.data));
+      if (cb) cb();
+    })
     .catch(err => console.error('Unable to retrieve goal', err));
 }

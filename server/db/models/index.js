@@ -5,6 +5,7 @@ const Tag = require('./tag');
 const Snippet = require('./snippet');
 const Bucket = require('./bucket');
 const Picture = require('./picture');
+const Story = require('./story');
 
 // Form the associations
 Goal.belongsTo(Category);
@@ -14,7 +15,10 @@ Tag.belongsToMany(Goal, { through: 'goalTag' });
 Goal.belongsToMany(User, { through: 'like' });
 User.belongsToMany(Goal, { through: 'like' });
 Goal.hasMany(Bucket);
-Bucket.hasMany(Picture)
+Bucket.hasMany(Picture);
+Bucket.belongsToMany(User, { through: 'fellowship' });
+Bucket.hasMany(Story);
+User.hasMany(Story);
 
 module.exports = {
   Goal,
@@ -23,5 +27,6 @@ module.exports = {
   Tag,
   Snippet,
   Bucket,
-  Picture
+  Picture,
+  Story
 };
