@@ -2,6 +2,9 @@ const db = require('../db');
 const Goal = db.model('goal');
 const User = db.model('user');
 const Snippet = db.model('snippet');
+const Bucket = db.model('bucket');
+const Picture = db.model('picture');
+const Story = db.model('story');
 const router = require('express').Router();
 
 // --------------------> '/goals/' <-----------------------
@@ -39,15 +42,39 @@ router.get('/:goalId', (req, res, next) => {
   Goal.findOne({
     where: { id: req.params.goalId },
     include: [{ model: User, attributes: ['id'] },
-              { model: Snippet, attributes: ['id', 'title', 'description'] }]
+              { model: Snippet, attributes: ['id', 'title', 'description'] },
+              { model: Bucket, attributes: ['id', 'status'], include: [
+                { model: Picture, attributes: ['id', 'picture_url'] },
+                { model: Story, attributes: ['id', 'title', 'comment', 'rating'], include: [
+                  { model: User, attributes: ['id', 'first_name', 'last_name', 'profile_pic_url'] }
+                ]}
+              ]}]
   })
   .then(goal => {
+    // Calculate the added and completed buckets
+    goal.dataValues.added = goal.buckets
+      .filter(bucket => bucket.status === 'in_progress').length;
+    goal.dataValues.completed = goal.buckets
+      .filter(bucket => bucket.status === 'completed').length;
     // Calculate the likes, remove associated users, and
+    goal.dataValues.likes = goal.users.length;
+
     // Check if the logged in user has liked this goal
     goal.dataValues.liked =
       goal.users.find(user => user.id === req.session.userId) !== undefined ? true : false;
 
-    goal.dataValues.likes = goal.users.length;
+    // Map pictures back to flat array
+    goal.dataValues.pictures = goal.buckets
+      .map(bucket => bucket.pictures)
+      .reduce((pics, curPics) => [...pics, ...curPics], []);
+
+    // Map stories back to flat array
+    goal.dataValues.stories = goal.buckets
+      .map(bucket => bucket.stories)
+      .reduce((allStories, curStories) => [...allStories, ...curStories], []);
+
+    // Remove values front end does not need
+    delete goal.dataValues.buckets;
     delete goal.dataValues.users;
     return res.send(goal)
   })

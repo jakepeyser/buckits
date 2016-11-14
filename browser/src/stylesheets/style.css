@@ -291,7 +291,7 @@ body,html {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  padding-right: 10px;
+  padding: 10px 10px 10px 0;
   font-size: 1.4em;
   font-weight: 500;
 }
@@ -308,13 +308,58 @@ body,html {
   padding-right: 20px;
 }
 
-.goal-loc {
+.goal-rating {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .goal-map {
   width: 100%;
   height: 400px;
   padding-left: 10px;
+}
+
+.goal-pics {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-left: 10px;
+}
+
+.goal-pic {
+  width: 33.33333%;
+  min-height: 40px;
+  background-color: white;
+}
+
+.goal-pic:last-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.goal-pic:last-child:before {
+  content: 'More Images';
+  z-index: 1;
+  position: absolute;
+  padding:  0 30px;
+  text-align: center;
+  font-family: Catamaran;
+  font-size: 1.3em;
+  font-weight: 600;
+}
+
+.goal-pic:last-child > img {
+  opacity: .5;
+}
+
+.goal-pic-img {
+  width: 100%;
+  height: 100%;
 }
 
 /* Snippets */
@@ -346,4 +391,41 @@ body,html {
 
 .snippet-text {
   text-align: justify;
+}
+
+/* Stories */
+
+#stories > h2 {
+  margin-bottom: 15px;
+}
+
+.review {
+  padding-bottom: 10px;
+}
+
+.review-metadata {
+  display: flex;
+  flex-direction: column;
+}
+
+.review-author {
+  display: flex;
+  align-items: center;
+}
+
+.review-author > p {
+  margin: 0 0 10px 5px;
+  font-size: 1.3em;
+}
+
+.review-metadata > .stars {
+  padding-top: 5px;
+}
+
+.review-comment > p {
+  text-align: justify;
+}
+
+.stars {
+  display: inherit;
 }
