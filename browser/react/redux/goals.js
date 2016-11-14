@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { RETRIEVED_GOAL } from './goal'
 
 /* -----------------    ACTIONS     ------------------ */
 
@@ -20,18 +19,20 @@ export default function reducer(currentGoals = initialGoals, action) {
   switch (action.type) {
     case RETRIEVED_GOALS:
       return action.goals;
-    case RETRIEVED_GOAL:
-      return currentGoals.map(goal =>
-        goal.id === action.goal.id ? action.goal : goal
-      );
     case LIKED_GOAL:
       return currentGoals.map(goal => {
-        if (goal.id === action.goalId) goal.liked = true;
+        if (goal.id === action.goalId) {
+          goal.liked = true;
+          goal.likes++;
+        }
         return goal;
       })
     case UNLIKED_GOAL:
       return currentGoals.map(goal => {
-        if (goal.id === action.goalId) goal.liked = false;
+        if (goal.id === action.goalId) {
+          goal.liked = false;
+          goal.likes--;
+        }
         return goal;
       })
     default:

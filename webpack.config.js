@@ -25,7 +25,7 @@ const IMAGE_PATHS = [ PATHS.logo ];
 // Vendor dependencies, isolated for chunking
 const vendorDependencies = [
   'axios',
-  'react', 'react-dom', 'react-helmet', 'react-router',
+  'react', 'react-dom', 'react-helmet', 'react-router', 'react-gmaps',
   'redux', 'react-redux', 'redux-logger', 'redux-thunk'
 ]
 

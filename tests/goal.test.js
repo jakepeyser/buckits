@@ -211,9 +211,9 @@ describe('Goal', () => {
         expect(currentStoreState.goals).to.be.deep.equal([]);
       });
 
-      it('has initial state of null current goal', () => {
+      it('has initial state of empty current goal object', () => {
         const currentStoreState = testingStore.getState();
-        expect(currentStoreState.currentGoal).to.be.equal(null);
+        expect(currentStoreState.currentGoal).to.be.deep.equal({});
       });
 
       it(`reducing on ${RETRIEVED_GOALS}`, () => {
@@ -222,11 +222,8 @@ describe('Goal', () => {
       });
 
       it(`reducing on ${RETRIEVED_GOAL}`, () => {
-        testingStore.dispatch(retrievedGoals(testGoals));
         testingStore.dispatch(retrievedGoal(curGoal));
-        expect(testingStore.getState().currentGoal).to.be.equal(curGoal.id);
-        let updatedGoal = testingStore.getState().goals.find(goal => goal.id === curGoal.id)
-        expect(updatedGoal).to.be.equal(curGoal);
+        expect(testingStore.getState().currentGoal).to.be.deep.equal(curGoal);
       });
 
       let axiosMethod;
@@ -252,7 +249,7 @@ describe('Goal', () => {
         it('retrieving a single goal asynchronously', (done) => {
           const fakeDispatch = (dispatchedItem) => {
             testingStore.dispatch(dispatchedItem);
-            expect(testingStore.getState().currentGoal).to.be.equal(curGoal.id);
+            expect(testingStore.getState().currentGoal).to.be.equal(curGoal);
             done();
           }
 
