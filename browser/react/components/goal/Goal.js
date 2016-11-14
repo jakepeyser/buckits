@@ -94,7 +94,11 @@ export default class Goal extends React.Component {
             }
             </div>
             <div className="snippet-text col-xs-9">
-              <p>{this.state.curSnippet.description}</p>
+              {
+                this.state.curSnippet.description.split('\n').map((item, i) =>
+                  <p key={i}>{ item.replace(/\[\d+\]/g, '') }</p>
+                )
+              }
             </div>
           </div>
           <div className="col-xs-12 col-md-4">

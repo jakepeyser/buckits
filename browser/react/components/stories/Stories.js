@@ -2,7 +2,6 @@ import React from 'react';
 import { fullName, getStars } from '../../utils'
 
 export default ({ stories }) => {
-  console.log(stories);
   return (
     <div id="stories">
       <h2>{stories.length ? `${stories.length} Stories from the Frontlines` : 'No stories yet'}</h2>
@@ -11,7 +10,11 @@ export default ({ stories }) => {
           <div key={story.id} className="review row">
             <div className="review-metadata col-xs-3">
               <div className="review-author">
-                <div className="profile-icon"></div>
+                <div className="profile-icon">
+                  <img
+                    src={ story.user.profile_pic_url }
+                    alt={ fullName(story.user) } />
+                </div>
                 <p>{ fullName(story.user) }</p>
               </div>
               { getStars(story.rating) }
