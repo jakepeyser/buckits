@@ -53,7 +53,7 @@ export default ({ goals, categories, loggedIn, curCategory,
                   <Badge
                     badgeContent={goal.likes}
                     primary={true}
-                    style={{padding: '8px 8px 10px 0px', marginTop: '4px'}}
+                    style={{padding: '8px 8px 10px 0px'}}
                     badgeStyle={{ width: '20px', height: '20px', backgroundColor: 'red', border: '1px solid black'}}>
                     <div className={`like ${goal.liked ? 'liked' : ''}`}
                       onClick={() => goal.liked ? unlike(goal.id) : like(goal.id)}/>

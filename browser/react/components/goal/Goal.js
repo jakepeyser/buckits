@@ -32,7 +32,7 @@ export default class Goal extends React.Component {
     // Make sure current snippet is not from last selected goal
     const curSnip = this.state.curSnippet && goal.snippets.findIndex(snip => snip.id === this.state.curSnippet.id) !== -1 ?
       this.state.curSnippet : goal.snippets[0];
-      console.log(goal.liked)
+
     return (
       <div id="goal">
         <Helmet title={ goal.name } />

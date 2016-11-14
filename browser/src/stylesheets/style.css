@@ -51,6 +51,19 @@ body,html {
   padding: 0 16px;
 }
 
+.profile-icon {
+  content: '';
+  background-image: url('https://premium.wpmudev.org/forums/?bb_attachments=712464&bbat=47619&inline');
+  background-repeat: no-repeat;
+  background-size: 44px;
+  height: 44px;
+  width: 44px;
+}
+
+.profile-icon:hover {
+  cursor: pointer;
+}
+
 /* Sign-in/Sign-up */
 
 #sign-in {
@@ -151,7 +164,7 @@ body,html {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  bottom: 53px;
+  bottom: 50px;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.6);
 }
