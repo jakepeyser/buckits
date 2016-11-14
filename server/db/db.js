@@ -4,7 +4,7 @@ const Sequelize = require('sequelize');
 
 const dbName = process.env.DB_NAME +
   (process.env.NODE_ENV === 'testing' ? '_test' : '');
-const url = process.env.DB_URL || `postgres://localhost:5432/${dbName}`
+const url = process.env.DATABASE_URL || `postgres://localhost:5432/${dbName}`
 
 // create the database instance
 console.log(chalk.yellow(`Opening database connection to ${url}`));
