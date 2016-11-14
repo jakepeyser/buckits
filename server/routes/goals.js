@@ -2,6 +2,8 @@ const db = require('../db');
 const Goal = db.model('goal');
 const User = db.model('user');
 const Snippet = db.model('snippet');
+const Bucket = db.model('bucket');
+const Picture = db.model('picture');
 const router = require('express').Router();
 
 // --------------------> '/goals/' <-----------------------
@@ -39,7 +41,10 @@ router.get('/:goalId', (req, res, next) => {
   Goal.findOne({
     where: { id: req.params.goalId },
     include: [{ model: User, attributes: ['id'] },
-              { model: Snippet, attributes: ['id', 'title', 'description'] }]
+              { model: Snippet, attributes: ['id', 'title', 'description'] },
+              { model: Bucket, attributes: ['id', 'status'], include: [
+                { model: Picture, attributes: ['id', 'picture_url'] }
+              ]}]
   })
   .then(goal => {
     // Calculate the likes, remove associated users, and
