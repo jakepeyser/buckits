@@ -150,7 +150,8 @@ body,html {
   position: relative;
   flex-direction: row;
   justify-content: space-between;
-  bottom: 46px;
+  align-items: center;
+  bottom: 53px;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.6);
 }
@@ -159,6 +160,7 @@ body,html {
   margin: 0;
   padding: 10px 0 10px 10px;
   font-family: Radaway;
+  font-size: 2em;
 }
 
 .goal-list-item-actions {

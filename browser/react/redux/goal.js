@@ -20,12 +20,16 @@ export default function reducer(currentGoal = initialGoal, action) {
       return action.goal;
     case LIKED_GOAL:
       return currentGoal.id === action.goalId ?
-        Object.assign({}, currentGoal, { liked: true }) :
-        currentGoal;
+        Object.assign({}, currentGoal, {
+          liked: true,
+          likes: ++currentGoal.likes
+        }) : currentGoal;
     case UNLIKED_GOAL:
       return currentGoal.id === action.goalId ?
-        Object.assign({}, currentGoal, { liked: false }) :
-        currentGoal;
+        Object.assign({}, currentGoal, {
+          liked: false,
+          likes: --currentGoal.likes
+        }) : currentGoal;
     default:
       return currentGoal;
   }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { AutoComplete, SelectField, MenuItem } from 'material-ui'
+import Badge from 'material-ui/Badge';
 
 export default ({ goals, categories, loggedIn, curCategory,
                   like, unlike, add, done, handleChange }) =>
@@ -49,8 +50,14 @@ export default ({ goals, categories, loggedIn, curCategory,
                     onClick={() => add(goal.id)}/>
                   <div className="done"
                     onClick={() => done(goal.id)}/>
-                  <div className={`like ${goal.liked ? 'liked' : ''}`}
-                    onClick={() => goal.liked ? unlike(goal.id) : like(goal.id)}/>
+                  <Badge
+                    badgeContent={goal.likes}
+                    primary={true}
+                    style={{padding: '8px 8px 10px 0px', marginTop: '4px'}}
+                    badgeStyle={{ width: '20px', height: '20px', backgroundColor: 'red', border: '1px solid black'}}>
+                    <div className={`like ${goal.liked ? 'liked' : ''}`}
+                      onClick={() => goal.liked ? unlike(goal.id) : like(goal.id)}/>
+                  </Badge>
                 </div> : null
             }
           </div>

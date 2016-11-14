@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import Helmet from 'react-helmet';
 import { Gmaps, Marker } from 'react-gmaps';
+import Badge from 'material-ui/Badge';
 
 export default class Goal extends React.Component {
   constructor(props) {
@@ -73,8 +74,14 @@ export default class Goal extends React.Component {
                   onClick={() => add(goal.id)}/>
                 <div className="done done-black"
                   onClick={() => done(goal.id)}/>
-                <div className={`like like-black ${goal.liked ? 'liked' : ''}`}
-                  onClick={() => goal.liked ? unlike(goal.id) : like(goal.id)}/>
+                <Badge
+                  badgeContent={goal.likes}
+                  primary={true}
+                  style={{padding: '10px 10px 10px 0px'}}
+                  badgeStyle={{ width: '22px', height: '22px', backgroundColor: 'red', border: '1px solid white'}}>
+                  <div className={`like like-black ${goal.liked ? 'liked' : ''}`}
+                    onClick={() => goal.liked ? unlike(goal.id) : like(goal.id)}/>
+                </Badge>
               </div> : null
           }
         </div>
