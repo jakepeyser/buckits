@@ -3,6 +3,8 @@ import { Link } from 'react-router';
 import Helmet from 'react-helmet';
 import { Gmaps, Marker } from 'react-gmaps';
 import Badge from 'material-ui/Badge';
+import Stories from '../stories/Stories'
+import { getAvgRating, getStars } from '../../utils'
 
 export default class Goal extends React.Component {
   constructor(props) {
@@ -54,9 +56,10 @@ export default class Goal extends React.Component {
                 </p>
                 : null
             }
-            {
-              // Average Rating Here
-            }
+            <div className="goal-rating">
+              { getStars(getAvgRating(goal.stories)) }
+              <a href={`/goals/${goal.id}#stories`}>{`${goal.stories.length} reviews`}</a>
+            </div>
             </div>
           </div>
           {
@@ -95,35 +98,38 @@ export default class Goal extends React.Component {
             </div>
           </div>
           <div className="col-xs-12 col-md-4">
-          {
-            goal.location ?
-            <div className="goal-map">
-              <Gmaps
-                width={'100%'}
-                height={'100%'}
-                lat={goal.lat}
-                lng={goal.lon}
-                zoom={12}
-                loadingMessage={`Loading ${goal.location} map view`}
-                params={{v: '3.exp', key: 'AIzaSyA2MTggvEGbxImhvkXixjC3guHeGnHCwvI'}}
-                onMapCreated={this.onMapCreated}>
-                <Marker
+            {
+              goal.location ?
+              <div className="goal-map">
+                <Gmaps
+                  width={'100%'}
+                  height={'100%'}
                   lat={goal.lat}
-                  lng={goal.lon} />
-              </Gmaps>
-            </div> : null
-          }
-          <div className="goal-pics">
-          {
-            goal.pictures && goal.pictures.slice(0, 6).map(pic =>
-              <div key={pic.id} className="goal-pic">
-                <img
-                  className="goal-pic-img"
-                  src={pic.picture_url} />
-              </div>
-            )
-          }
+                  lng={goal.lon}
+                  zoom={12}
+                  loadingMessage={`Loading ${goal.location} map view`}
+                  params={{v: '3.exp', key: 'AIzaSyA2MTggvEGbxImhvkXixjC3guHeGnHCwvI'}}
+                  onMapCreated={this.onMapCreated}>
+                  <Marker
+                    lat={goal.lat}
+                    lng={goal.lon} />
+                </Gmaps>
+              </div> : null
+            }
+            <div className="goal-pics">
+            {
+              goal.pictures && goal.pictures.slice(0, 6).map(pic =>
+                <div key={pic.id} className="goal-pic">
+                  <img
+                    className="goal-pic-img"
+                    src={pic.picture_url} />
+                </div>
+              )
+            }
+            </div>
           </div>
+          <div className="col-xs-12 col-md-8">
+            <Stories stories={goal.stories}/>
           </div>
         </div>
       </div>

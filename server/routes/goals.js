@@ -4,6 +4,7 @@ const User = db.model('user');
 const Snippet = db.model('snippet');
 const Bucket = db.model('bucket');
 const Picture = db.model('picture');
+const Story = db.model('story');
 const router = require('express').Router();
 
 // --------------------> '/goals/' <-----------------------
@@ -43,7 +44,10 @@ router.get('/:goalId', (req, res, next) => {
     include: [{ model: User, attributes: ['id'] },
               { model: Snippet, attributes: ['id', 'title', 'description'] },
               { model: Bucket, attributes: ['id', 'status'], include: [
-                { model: Picture, attributes: ['id', 'picture_url'] }
+                { model: Picture, attributes: ['id', 'picture_url'] },
+                { model: Story, attributes: ['id', 'title', 'comment', 'rating'], include: [
+                  { model: User, attributes: ['id', 'first_name', 'last_name', 'profile_pic_url'] }
+                ]}
               ]}]
   })
   .then(goal => {
@@ -63,6 +67,11 @@ router.get('/:goalId', (req, res, next) => {
     goal.dataValues.pictures = goal.buckets
       .map(bucket => bucket.pictures)
       .reduce((pics, curPics) => [...pics, ...curPics], []);
+
+    // Map stories back to flat array
+    goal.dataValues.stories = goal.buckets
+      .map(bucket => bucket.stories)
+      .reduce((allStories, curStories) => [...allStories, ...curStories], []);
 
     // Remove values front end does not need
     delete goal.dataValues.buckets;

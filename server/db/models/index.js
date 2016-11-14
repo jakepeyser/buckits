@@ -19,6 +19,7 @@ Bucket.hasMany(Picture);
 Bucket.belongsToMany(User, { through: 'fellowship' });
 Bucket.hasMany(Story);
 User.hasMany(Story);
+Story.belongsTo(User)
 
 module.exports = {
   Goal,

@@ -291,7 +291,7 @@ body,html {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  padding-right: 10px;
+  padding: 10px 10px 10px 0;
   font-size: 1.4em;
   font-weight: 500;
 }
@@ -306,6 +306,13 @@ body,html {
   background-repeat: no-repeat;
   background-size: 15px 24px;
   padding-right: 20px;
+}
+
+.goal-rating {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .goal-map {
@@ -384,4 +391,41 @@ body,html {
 
 .snippet-text {
   text-align: justify;
+}
+
+/* Stories */
+
+#stories > h2 {
+  margin-bottom: 15px;
+}
+
+.review {
+  padding-bottom: 10px;
+}
+
+.review-metadata {
+  display: flex;
+  flex-direction: column;
+}
+
+.review-author {
+  display: flex;
+  align-items: center;
+}
+
+.review-author > p {
+  margin: 0 0 10px 5px;
+  font-size: 1.3em;
+}
+
+.review-metadata > .stars {
+  padding-top: 5px;
+}
+
+.review-comment > p {
+  text-align: justify;
+}
+
+.stars {
+  display: inherit;
 }
