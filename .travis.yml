@@ -6,8 +6,9 @@ cache:
   - node_modules
 services:
 - postgresql
-install: npm install
-script: npm test && npm run build
+install: npm install && npm test
+script: NODE_ENV=production npm run build
+before_deploy: rm -rf node_modules
 deploy:
   skip_cleanup: true
   provider: heroku
