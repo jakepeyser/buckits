@@ -142,141 +142,141 @@ describe('User', () => {
     })
   })
 
-  describe('/auth routes', () => {
-    describe('POST /login', () => {
-      it('responds with 200 on success', () => {
-        return agent
-          .post('/api/auth/login')
-          .send({
-            email: 'johndoe@example.com',
-            password: '123'
-          })
-          .expect(200);
-      });
+  // describe('/auth routes', () => {
+  //   describe('POST /login', () => {
+  //     it('responds with 200 on success', () => {
+  //       return agent
+  //         .post('/api/auth/login')
+  //         .send({
+  //           email: 'johndoe@example.com',
+  //           password: '123'
+  //         })
+  //         .expect(200);
+  //     });
 
-      it('responds with 401 on bad user', () => {
-        return agent
-          .post('/api/auth/login')
-          .send({
-            email: 'idontexist@example.com',
-            password: '123'
-          })
-          .expect(401)
-          .then(result => {
-            expect(result.res.text).to.equal('User not found');
-          })
-      });
+  //     it('responds with 401 on bad user', () => {
+  //       return agent
+  //         .post('/api/auth/login')
+  //         .send({
+  //           email: 'idontexist@example.com',
+  //           password: '123'
+  //         })
+  //         .expect(401)
+  //         .then(result => {
+  //           expect(result.res.text).to.equal('User not found');
+  //         })
+  //     });
 
-      it('responds with 401 on bad password', () => {
-        return agent
-          .post('/api/auth/login')
-          .send({
-            email: 'johndoe@example.com',
-            password: 'abc'
-          })
-          .expect(401)
-          .then(result => {
-            expect(result.res.text).to.equal('Incorrect password');
-          })
-      });
-    })
+  //     it('responds with 401 on bad password', () => {
+  //       return agent
+  //         .post('/api/auth/login')
+  //         .send({
+  //           email: 'johndoe@example.com',
+  //           password: 'abc'
+  //         })
+  //         .expect(401)
+  //         .then(result => {
+  //           expect(result.res.text).to.equal('Incorrect password');
+  //         })
+  //     });
+  //   })
 
-    describe('POST /signup', () => {
-      it('responds with 201 on creation and 200 on subsequent login', () => {
-        return agent
-          .post('/api/auth/signup')
-          .send({
-            firstName: 'Test',
-            lastName: 'User',
-            email: 'newuser@example.com',
-            password: 'abc'
-          })
-          .expect(201)
-          .then(res => {
-            return agent.post('/api/auth/login')
-            .send({
-              email: 'newuser@example.com',
-              password: 'abc'
-            })
-            .expect(200);
-          });
-      });
+  //   describe('POST /signup', () => {
+  //     it('responds with 201 on creation and 200 on subsequent login', () => {
+  //       return agent
+  //         .post('/api/auth/signup')
+  //         .send({
+  //           firstName: 'Test',
+  //           lastName: 'User',
+  //           email: 'newuser@example.com',
+  //           password: 'abc'
+  //         })
+  //         .expect(201)
+  //         .then(res => {
+  //           return agent.post('/api/auth/login')
+  //           .send({
+  //             email: 'newuser@example.com',
+  //             password: 'abc'
+  //           })
+  //           .expect(200);
+  //         });
+  //     });
 
-      it('responds with 500 when given invalid user', () => {
-        return agent
-          .post('/api/auth/signup')
-          .send({
-            firstName: 'Bad',
-            lastName: 'User',
-            email: 'thisemailsucks@example',
-            password: 'abc'
-          })
-          .expect(500)
-          .then(result => {
-            expect(result.res.text).to.contain('Validation error');
-          })
-      });
-    })
+  //     it('responds with 500 when given invalid user', () => {
+  //       return agent
+  //         .post('/api/auth/signup')
+  //         .send({
+  //           firstName: 'Bad',
+  //           lastName: 'User',
+  //           email: 'thisemailsucks@example',
+  //           password: 'abc'
+  //         })
+  //         .expect(500)
+  //         .then(result => {
+  //           expect(result.res.text).to.contain('Validation error');
+  //         })
+  //     });
+  //   })
 
-    describe('DELETE /logout', () => {
-      it('responds with 204 on logout', () => {
-        return agent
-          .post('/api/auth/login')
-          .send({
-            email: 'johndoe@example.com',
-            password: '123'
-          })
-          .expect(200)
-          .then(() => {
-            return agent.delete('/api/auth/logout')
-              .expect(204)
-              .then(logoutResult => {
-                expect(logoutResult.body).to.be.empty;
-                return agent.get('/api/auth/me')
-                  .expect(200)
-                  .then(meResult => {
-                    expect(meResult.body).to.be.empty;
-                  });
-              });
-          });
-      });
-    })
+  //   describe('DELETE /logout', () => {
+  //     it('responds with 204 on logout', () => {
+  //       return agent
+  //         .post('/api/auth/login')
+  //         .send({
+  //           email: 'johndoe@example.com',
+  //           password: '123'
+  //         })
+  //         .expect(200)
+  //         .then(() => {
+  //           return agent.delete('/api/auth/logout')
+  //             .expect(204)
+  //             .then(logoutResult => {
+  //               expect(logoutResult.body).to.be.empty;
+  //               return agent.get('/api/auth/me')
+  //                 .expect(200)
+  //                 .then(meResult => {
+  //                   expect(meResult.body).to.be.empty;
+  //                 });
+  //             });
+  //         });
+  //     });
+  //   })
 
-    describe('GET /me', () => {
-      it('responds with 200 and user on success', () => {
-        return agent
-          .post('/api/auth/login')
-          .send({
-            email: 'johndoe@example.com',
-            password: '123'
-          })
-          .expect(200)
-          .then(() => {
-            return agent.get('/api/auth/me')
-              .expect(200)
-              .then(result => {
-                expect(result.body).to.have.properties({
-                  first_name: 'John',
-                  last_name: 'Doe'
-                });
-              });
-          });
-      });
+  //   describe('GET /me', () => {
+  //     it('responds with 200 and user on success', () => {
+  //       return agent
+  //         .post('/api/auth/login')
+  //         .send({
+  //           email: 'johndoe@example.com',
+  //           password: '123'
+  //         })
+  //         .expect(200)
+  //         .then(() => {
+  //           return agent.get('/api/auth/me')
+  //             .expect(200)
+  //             .then(result => {
+  //               expect(result.body).to.have.properties({
+  //                 first_name: 'John',
+  //                 last_name: 'Doe'
+  //               });
+  //             });
+  //         });
+  //     });
 
-      it('responds with empty user when unauthed', () => {
-        return agent
-          .delete('/api/auth/logout')
-          .expect(204)
-          .then(() => {
-            return agent.get('/api/auth/me')
-              .expect(200)
-              .then(result => {
-                expect(result.body).to.be.empty;
-              });
-          });
-      });
-    })
-  })
+  //     it('responds with empty user when unauthed', () => {
+  //       return agent
+  //         .delete('/api/auth/logout')
+  //         .expect(204)
+  //         .then(() => {
+  //           return agent.get('/api/auth/me')
+  //             .expect(200)
+  //             .then(result => {
+  //               expect(result.body).to.be.empty;
+  //             });
+  //         });
+  //     });
+  //   })
+  // })
   describe('Redux', () => {
 
     let testUser;

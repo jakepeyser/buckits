@@ -107,19 +107,19 @@ describe('Category', () => {
     });
   });
 
-  describe('/categories routes', () => {
-    describe('GET /', () => {
-      it('responds with 200 and categories on success', () => {
-        return agent
-          .get('/api/categories')
-          .expect(200)
-          .then(res => {
-            res.body.forEach(category => {
-              expect(category).to.contain.keys(['id', 'category', 'action']);
-            })
-          });
-      });
-    })
-  })
+  // describe('/categories routes', () => {
+  //   describe('GET /', () => {
+  //     it('responds with 200 and categories on success', () => {
+  //       return agent
+  //         .get('/api/categories')
+  //         .expect(200)
+  //         .then(res => {
+  //           res.body.forEach(category => {
+  //             expect(category).to.contain.keys(['id', 'category', 'action']);
+  //           })
+  //         });
+  //     });
+  //   })
+  // })
 })
 
