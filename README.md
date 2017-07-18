@@ -1,4 +1,6 @@
-# Buckits 
+# Buckits
+
+![Build Status](https://travis-ci.org/jakepeyser/buckits.png)
 
 _Helping you complete your bucket list, drop by drop_
 
